@@ -248,7 +248,9 @@ const gameApiSlice = createSlice({
             state.messages.messages,
             messages,
           );
-          state.messages.messages = allMessages;
+          if (state.messages.messages.length !== allMessages.length) {
+            state.messages.messages = allMessages;
+          }
         }
       });
   },
