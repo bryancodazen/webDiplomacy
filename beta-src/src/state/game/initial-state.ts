@@ -139,6 +139,7 @@ const initialState: GameState = {
   },
   messages: {
     messages: [],
+    time: 0,
   },
 };
 
