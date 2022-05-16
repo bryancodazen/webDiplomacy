@@ -106,6 +106,21 @@ export const toggleVoteStatus = createAsyncThunk(
   },
 );
 
+export const markMessagesSeen = createAsyncThunk(
+  ApiRoute.MESSAGES_SEEN,
+  async (queryParams: {
+    countryID: string;
+    gameID: string;
+    seenCountryID: string;
+  }) => {
+    const { data } = await getGameApiRequest(
+      ApiRoute.MESSAGES_SEEN,
+      queryParams,
+    );
+    return data as string;
+  },
+);
+
 export const saveOrders = createAsyncThunk(
   "game/submitOrders",
   async (data: OrderSubmission) => {
@@ -168,6 +183,12 @@ const gameApiSlice = createSlice({
     highlightMapTerritoriesBasedOnStatuses,
     drawBuilds,
     dispatchCommand,
+    processMessagesSeen(state, action) {
+      console.log(`processMessagesSeen ${action}`);
+      state.messages.newMessagesFrom = state.messages.newMessagesFrom.filter(
+        (e) => e !== action.payload,
+      );
+    },
   },
   extraReducers(builder) {
     builder
@@ -249,7 +270,7 @@ const gameApiSlice = createSlice({
       })
       .addCase(fetchGameMessages.fulfilled, (state, action) => {
         if (action.payload) {
-          const { messages, time } = action.payload;
+          const { messages, newMessagesFrom, time } = action.payload;
           if (messages) {
             const allMessages = mergeMessageArrays(
               state.messages.messages,
@@ -258,6 +279,9 @@ const gameApiSlice = createSlice({
             if (state.messages.messages.length !== allMessages.length) {
               state.messages.messages = allMessages;
             }
+          }
+          if (newMessagesFrom) {
+            state.messages.newMessagesFrom = newMessagesFrom;
           }
           if (time) {
             state.messages.time = time;
