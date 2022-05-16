@@ -184,7 +184,6 @@ const gameApiSlice = createSlice({
     drawBuilds,
     dispatchCommand,
     processMessagesSeen(state, action) {
-      console.log(`processMessagesSeen ${action}`);
       state.messages.newMessagesFrom = state.messages.newMessagesFrom.filter(
         (e) => e !== action.payload,
       );
