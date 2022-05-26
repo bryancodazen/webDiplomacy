@@ -135,6 +135,7 @@ export default function processUnitClick(state, clickData) {
   } else if (inProgress) {
     if (unitID === clickData.payload.unitID) {
       resetOrder(state);
+      highlightMapTerritoriesBasedOnStatuses(state);
       if (type === "disband" || type === "retreat") {
         highlightMapTerritoriesBasedOnStatuses(state);
       }
