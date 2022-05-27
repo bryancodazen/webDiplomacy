@@ -136,9 +136,6 @@ export default function processUnitClick(state, clickData) {
     if (unitID === clickData.payload.unitID) {
       resetOrder(state);
       highlightMapTerritoriesBasedOnStatuses(state);
-      if (type === "disband" || type === "retreat") {
-        highlightMapTerritoriesBasedOnStatuses(state);
-      }
     } else if ((type === "hold" || type === "move") && onTerritory !== null) {
       highlightMapTerritoriesBasedOnStatuses(state);
     } else if (method === "dblClick" && unitID !== clickData.payload.unitID) {

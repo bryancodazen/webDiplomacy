@@ -157,8 +157,12 @@ export default class BoardClass {
    * @returns {TerritoryClass}
    */
   getMovableTerritories(unit: UnitClass): TerritoryClass[] {
-    return unit.Territory.CoastalBorders.reduce(
-      (acc: TerritoryClass[], cur) => {
+    const territories = this.territories.find(
+      (terr) => terr.id === unit.terrID,
+    );
+
+    if (territories) {
+      return territories.CoastalBorders.reduce((acc: TerritoryClass[], cur) => {
         if (unit.canCrossBorder(cur)) {
           const borderTerritory = this.territories.find(
             (territory) => territory.id === cur.id,
@@ -168,9 +172,9 @@ export default class BoardClass {
         }
 
         return acc;
-      },
-      [],
-    );
+      }, []);
+    }
+    return [];
   }
 
   /**
