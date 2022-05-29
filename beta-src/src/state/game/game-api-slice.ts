@@ -212,7 +212,6 @@ const gameApiSlice = createSlice({
       .addCase(fetchGameData.pending, (state) => {
         state.apiStatus = "loading";
         state.transition = true;
-        state.ordersMeta = {};
         if (state.overview.phase !== "Builds") {
           state.mustDestroyUnitsBuildPhase = false;
         }
