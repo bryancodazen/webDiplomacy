@@ -22,8 +22,12 @@ export default function drawArrow(
   let x2;
   let y1;
   let y2;
-
-  const fromTerritoryName = Territory[unitTerritory];
+  let fromTerritoryName = Territory[unitTerritory];
+  // This is to find the unit on the main territory
+  // since the unit for coast are not actaully on the coastal territores
+  fromTerritoryName = fromTerritoryName
+    .replace("_NORTH_COAST", "")
+    .replace("_SOUTH_COAST", "");
   const fromTerritoryEl: SVGSVGElement = d3
     .select(`#${fromTerritoryName}-territory`)
     .node();

@@ -88,11 +88,18 @@ export default function getOrdersMeta(
         let allowedBorderCrossings: TerritoryClass[] = [];
         if (orderUnit) {
           allowedBorderCrossings = moveChoices.filter((choice) => {
-            const { Borders } = choice;
+            const { Borders, CoastalBorders } = choice;
             const from = Borders.find(
               (border) => border.id === orderUnit?.terrID,
             );
-            if (from && orderUnit?.canCrossBorder(from)) {
+            const coast = CoastalBorders.find(
+              (border) => border.id === orderUnit?.terrID,
+            );
+
+            if (
+              (from && orderUnit?.canCrossBorder(from)) ||
+              (coast && orderUnit?.canCrossBorder(coast))
+            ) {
               return true;
             }
             return false;
